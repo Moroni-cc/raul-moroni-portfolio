@@ -21,7 +21,7 @@ export default function About() {
             <div className="w-full aspect-[4/5] bg-surface-container rounded-lg overflow-hidden relative group">
               <div className="absolute inset-0 bg-gradient-to-tr from-surface-dim via-transparent to-transparent z-10" />
               <Image
-                src="/images/about-workspace.jpg"
+                src="/images/about-workspace.png"
                 alt="Espacio de trabajo minimalista y oscuro con acentos rojos, monitor mostrando código."
                 fill
                 sizes="(min-width: 768px) 40vw, 100vw"

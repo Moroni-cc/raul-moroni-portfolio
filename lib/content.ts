@@ -52,14 +52,14 @@ export const projects: Project[] = [
     codeUrl: "#",
   },
   {
-    id: "sleepoutside",
-    title: "SleepOutside",
+    id: "SGH-funval",
+    title: "SGH-funval",
     description:
-      'Una aplicación de comercio electrónico robusta para equipamiento de exteriores. Diseñada con un enfoque "Mobile First", utilizando CSS Grid y Flexbox para layouts complejos y responsive.',
-    image: "/images/projects/sleepoutside.jpg",
+      'Plataforma de gestión académica con dashboards para estudiantes y administradores. Registro de horas, gestión de cursos, reportes y estadísticas.',
+    image: "/images/projects/SGH-funval.jpg",
     imageAlt:
-      "Captura de pantalla de SleepOutside, una tienda en línea de equipamiento de camping con diseño oscuro de alto contraste.",
-    tags: ["HTML5", "CSS Grid/Flexbox", "JavaScript", "Git"],
+      "Dashboard de SGH-funval",
+    tags: ["React 19", "Vite", "Tailwind CSS", "React Router DOM", "Axios", "Lucide React"],
     demoUrl: "#",
     codeUrl: "#",
     featured: true,
@@ -67,7 +67,7 @@ export const projects: Project[] = [
 ];
 
 export const contactChannels: ContactChannel[] = [
-  { icon: "mail", label: "contacto@raulmoroni.com", href: "mailto:contacto@raulmoroni.com" },
-  { icon: "briefcase", label: "LinkedIn Profile", href: "#" },
-  { icon: "code", label: "GitHub Repositories", href: "#" },
+  { icon: "mail", label: "raulmoronicapchacadillo@gmail.com", href: "mailto:raulmoronicapchacadillo@gmail.com" },
+  { icon: "briefcase", label: "LinkedIn Profile", href: "https://www.linkedin.com/in/ra%C3%BAl-moroni-capcha-cadillo-659a41341/" },
+  { icon: "code", label: "GitHub Repositories", href: "https://github.com/Moroni-cc" },
 ];
