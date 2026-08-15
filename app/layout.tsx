@@ -24,9 +24,14 @@ const geist = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "Raúl Moroni — Frontend Developer",
+  title: "Moroni Capcha — Frontend Developer",
   description:
     "Portafolio profesional de Raúl Moroni, Frontend Developer especializado en React, Next.js y experiencias web de alto rendimiento.",
+  icons: {
+    icon: "/images/logop.png",
+    shortcut: "/images/logop.png",
+    apple: "/images/logop.png",
+  },
 };
 
 export default function RootLayout({

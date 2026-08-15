@@ -19,7 +19,20 @@ export default function ContactForm() {
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    // Wire this up to your form handler / API route of choice.
+
+    const { name, email, message } = formData;
+
+    if (!name || !email || !message) {
+      return;
+    }
+
+    // Construir el mensaje de WhatsApp bien estructurado
+    const text = `¡Hola Moroni! 👋\nEstoy interesado en contactarte desde tu portafolio.\n*Mis Datos:*\n• *Nombre:* ${name}\n• *Correo:* ${email}\n*Mensaje:* ${message}`;
+
+    // Crear enlace y abrir en nueva pestaña con tu número de WhatsApp
+    const whatsappUrl = `https://wa.me/51958800505?text=${encodeURIComponent(text)}`;
+    window.open(whatsappUrl, "_blank");
+
     setStatus("sent");
     setFormData(initialState);
   }

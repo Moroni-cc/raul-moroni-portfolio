@@ -43,7 +43,7 @@ export default function Header() {
 
         <div className="flex items-center gap-4">
           <a
-            href="/cv-raul-moroni.pdf"
+            href="https://drive.google.com/file/d/1qOdgtwpyC-GBVNyRKJt2GWbsG5oqFfYi/view?usp=drive_link"
             className="hidden sm:flex items-center px-6 py-2 bg-primary-container text-on-surface font-label text-xs uppercase tracking-widest transition-all hover:bg-primary-container/80 hover:shadow-[0_0_15px_rgba(139,13,26,0.4)]"
           >
             Descargar CV

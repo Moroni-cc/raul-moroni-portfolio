@@ -36,7 +36,12 @@ export default function Contact() {
                 const Icon = ICONS[channel.icon];
                 return (
                   <li key={channel.label}>
-                    <a href={channel.href} className="flex items-center gap-4 group w-fit">
+                    <a
+                      href={channel.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-4 group w-fit"
+                    >
                       <span className="w-12 h-12 rounded-full border border-white/10 bg-surface flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-colors">
                         <Icon size={20} className="text-on-surface group-hover:text-on-primary" aria-hidden="true" />
                       </span>

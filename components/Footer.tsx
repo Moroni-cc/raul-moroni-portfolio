@@ -8,13 +8,13 @@ export default function Footer() {
           © {currentYear} Raúl Moroni. Engineering Excellence.
         </p>
         <div className="flex items-center gap-12">
-          <a href="#" className="text-on-surface-variant hover:text-primary transition-colors font-label text-xs uppercase">
+          <a href="https://www.linkedin.com/in/ra%C3%BAl-moroni-capcha-cadillo-659a41341/" className="text-on-surface-variant hover:text-primary transition-colors font-label text-xs uppercase">
             LinkedIn
           </a>
-          <a href="#" className="text-on-surface-variant hover:text-primary transition-colors font-label text-xs uppercase">
+          <a href="https://github.com/Moroni-cc" className="text-on-surface-variant hover:text-primary transition-colors font-label text-xs uppercase">
             GitHub
           </a>
-          <a href="#" className="text-on-surface-variant hover:text-primary transition-colors font-label text-xs uppercase">
+          <a href="mailto:raulmoronicapchacadillo@gmail.com" className="text-on-surface-variant hover:text-primary transition-colors font-label text-xs uppercase">
             Email
           </a>
         </div>

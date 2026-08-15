@@ -28,11 +28,15 @@ types/
 ## Cómo correrlo
 
 ```bash
-npm install
-npm run dev
+# usando pnpm (gestor recomendado para este repo)
+pnpm install
+pnpm run dev
 ```
 
 Abre http://localhost:3000
+
+Nota: este repositorio usa `pnpm`. Elimina `package-lock.json` si existe y
+no mezcles `npm`/`yarn` con `pnpm` para evitar conflictos de lockfile.
 
 ## Imágenes pendientes
 

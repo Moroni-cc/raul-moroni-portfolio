@@ -36,8 +36,8 @@ export const projects: Project[] = [
     imageAlt:
       "Captura de pantalla de Windbnb, una aplicación de reservas de alojamiento con diseño minimalista en modo oscuro.",
     tags: ["Vanilla JS", "Vite", "Tailwind", "Vercel"],
-    demoUrl: "#",
-    codeUrl: "#",
+    demoUrl: "https://windbnb-orcin-nu.vercel.app/",
+    codeUrl: "https://github.com/Moroni-cc/Windbnb",
   },
   {
     id: "moodbeats",
@@ -48,8 +48,8 @@ export const projects: Project[] = [
     imageAlt:
       "Captura de pantalla de Moodbeats, una interfaz de streaming de música en modo oscuro con visualizaciones de datos.",
     tags: ["JavaScript", "REST APIs", "CSS3"],
-    demoUrl: "#",
-    codeUrl: "#",
+    demoUrl: "https://moroni-cc.github.io/moodbeats/",
+    codeUrl: "https://github.com/Moroni-cc/moodbeats",
   },
   {
     id: "SGH-funval",
@@ -60,8 +60,8 @@ export const projects: Project[] = [
     imageAlt:
       "Dashboard de SGH-funval",
     tags: ["React 19", "Vite", "Tailwind CSS", "React Router DOM", "Axios", "Lucide React"],
-    demoUrl: "#",
-    codeUrl: "#",
+    demoUrl: "https://sgh-funval.vercel.app/login",
+    codeUrl: "https://github.com/Moroni-cc/SGH-funval",
     featured: true,
   },
 ];
