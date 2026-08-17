@@ -2,7 +2,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-[90vh] flex flex-col justify-center max-w-[1200px] mx-auto px-5 lg:px-6 pt-12 pb-[120px] w-full overflow-hidden"
+      className="relative min-h-[90vh] flex flex-col justify-center max-w-full mx-auto px-5 lg:px-6 pt-12 pb-section-gap w-full overflow-hidden"
     >
       {/* Video Background */}
       <video
@@ -12,7 +12,7 @@ export default function Hero() {
         loop
         playsInline
       >
-        <source src="/images/avatar.mp4" type="video/mp4" />
+        <source src="/images/avatar1.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
 
@@ -21,33 +21,39 @@ export default function Hero() {
         className="absolute inset-0 -z-10"
         style={{
           background:
-            'linear-gradient(to right, rgba(19,19,19,0.95) 30%, rgba(19,19,19,0.4) 100%)',
+            'linear-gradient(to right, rgba(19,19,19,0.95) 20%, rgba(19,19,19,0.4) 100%)',
         }}
         aria-hidden="true"
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
-        <div className="flex flex-col gap-4 relative lg:col-span-10 pt-12">
+        {/* Label vertical */}
+        <div className="hidden lg:flex lg:col-span-1 items-center justify-center">
+          <p
+            className="font-label text-xs text-primary tracking-[0.2em] uppercase opacity-70"
+            style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
+          >
+            Portfolio 2026
+          </p>
+        </div>
+
+        {/* Contenido principal */}
+        <div className="flex flex-col gap-6 relative lg:col-span-11 pt-12">
           <div
             className="absolute -top-32 -left-32 w-64 h-64 bg-primary/20 blur-[100px] rounded-full pointer-events-none"
             aria-hidden="true"
           />
 
-          <p
-            className="hidden lg:block font-label text-xs text-primary tracking-[0.2em] uppercase absolute -left-10 top-0 opacity-70"
-            style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
-          >
-            Portfolio 2026
-          </p>
+          <div>
+            <h1 className="text-[2.5rem] leading-[1.2] font-bold lg:text-[4rem] lg:leading-[1.1] lg:tracking-[-0.02em] font-display text-on-surface mb-2">
+              Hola, soy <br />
+              <span className="text-gradient-primary">Moroni Capcha</span>
+            </h1>
 
-          <h1 className="text-[2.5rem] leading-[1.2] font-bold lg:text-[4rem] lg:leading-[1.1] lg:tracking-[-0.02em] font-display text-on-surface">
-            Hola, soy <br />
-            <span className="text-gradient-primary">Moroni Capcha</span>
-          </h1>
-
-          <h2 className="text-2xl lg:text-[2rem] font-semibold leading-[1.3] font-display text-on-surface-variant">
-            Frontend Developer
-          </h2>
+            <h2 className="text-2xl lg:text-[2rem] font-semibold leading-[1.3] font-display text-on-surface-variant">
+              Frontend Developer
+            </h2>
+          </div>
 
           <p className="text-lg leading-relaxed text-on-surface-variant/80 max-w-2xl">
             Especializado en crear experiencias web dinámicas, interactivas y
@@ -56,7 +62,7 @@ export default function Hero() {
             rendimiento excepcional.
           </p>
 
-          <div className="flex flex-wrap gap-4 mt-4">
+          <div className="flex flex-wrap gap-4">
             <a
               href="#projects"
               className="group relative px-8 py-4 bg-primary-container text-on-surface font-label text-xs uppercase tracking-widest overflow-hidden transition-all hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(139,13,26,0.4)]"
