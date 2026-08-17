@@ -2,15 +2,26 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-[90vh] flex flex-col justify-center max-w-[1200px] mx-auto px-5 lg:px-6 pt-12 pb-[120px] w-full"
+      className="relative min-h-[90vh] flex flex-col justify-center max-w-[1200px] mx-auto px-5 lg:px-6 pt-12 pb-[120px] w-full overflow-hidden"
     >
+      {/* Video Background */}
+      <video
+        className="absolute inset-0 w-full h-full object-cover -z-20"
+        autoPlay
+        muted
+        loop
+        playsInline
+      >
+        <source src="/images/avatar.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+
+      {/* Gradient Overlay */}
       <div
         className="absolute inset-0 -z-10"
         style={{
-          backgroundImage:
-            'linear-gradient(to right, rgba(19,19,19,0.95) 30%, rgba(19,19,19,0.4) 100%), url("/images/avatar.gif")',
-          backgroundSize: "cover",
-          backgroundPosition: "center center",
+          background:
+            'linear-gradient(to right, rgba(19,19,19,0.95) 30%, rgba(19,19,19,0.4) 100%)',
         }}
         aria-hidden="true"
       />
