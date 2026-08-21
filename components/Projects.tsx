@@ -1,15 +1,25 @@
+"use client";
+
+import { useRef } from "react";
 import Image from "next/image";
-import { Eye, Code2, ArrowRight } from "lucide-react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ExternalLink, Github, Sparkles, FolderGit2 } from "lucide-react";
 import { projects } from "@/lib/content";
 import type { Project } from "@/types";
 
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(useGSAP, ScrollTrigger);
+}
+
 function TagList({ tags }: { tags: string[] }) {
   return (
-    <div className="mt-auto flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-2 pt-2">
       {tags.map((tag) => (
         <span
           key={tag}
-          className="px-2 py-1 text-xs font-label text-outline uppercase border border-outline-variant/30 rounded bg-surface-container-low"
+          className="px-2.5 py-1 text-[11px] font-label text-on-surface-variant uppercase border border-white/5 rounded bg-surface-container hover:border-primary/40 hover:text-primary transition-colors"
         >
           {tag}
         </span>
@@ -18,148 +28,215 @@ function TagList({ tags }: { tags: string[] }) {
   );
 }
 
-function HoverActions({ project }: { project: Project }) {
+function ProjectActions({ project }: { project: Project }) {
   return (
-    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4 backdrop-blur-sm">
+    <div className="flex items-center gap-3">
       {project.demoUrl && (
         <a
           href={project.demoUrl}
-          title="Demo en vivo"
-          className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-on-primary hover:scale-110 transition-transform shadow-[0_0_15px_rgba(139,13,26,0.6)]"
+          target="_blank"
+          rel="noopener noreferrer"
+          title={`Ver demo en vivo de ${project.title}`}
+          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-md bg-primary-container text-on-surface font-label text-xs uppercase tracking-wider hover:bg-primary hover:text-on-primary transition-all duration-300 shadow-[0_0_15px_rgba(155,17,30,0.3)]"
         >
-          <Eye size={20} aria-hidden="true" />
-          <span className="sr-only">Ver demo en vivo de {project.title}</span>
+          <span>Demo</span>
+          <ExternalLink size={13} aria-hidden="true" />
         </a>
       )}
       {project.codeUrl && (
         <a
           href={project.codeUrl}
-          title="Código fuente"
-          className="w-12 h-12 rounded-full bg-surface flex items-center justify-center text-on-surface border border-white/20 hover:scale-110 transition-transform hover:bg-white/10"
+          target="_blank"
+          rel="noopener noreferrer"
+          title={`Ver código de ${project.title}`}
+          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-md bg-surface-container border border-white/10 text-on-surface font-label text-xs uppercase tracking-wider hover:border-primary/40 hover:bg-surface-container-high transition-colors"
         >
-          <Code2 size={20} aria-hidden="true" />
-          <span className="sr-only">Ver código fuente de {project.title}</span>
+          <Github size={13} aria-hidden="true" />
+          <span>Código</span>
         </a>
       )}
     </div>
   );
 }
 
-function ProjectCard({ project }: { project: Project }) {
+function FeaturedProjectCard({ project }: { project: Project }) {
   return (
-    <article className="group relative flex flex-col bg-surface rounded-xl overflow-hidden border border-white/5 transition-colors duration-500 hover:border-primary">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/5 via-surface to-surface opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 pointer-events-none" />
-      <div className="relative z-10 p-8 flex-grow flex flex-col">
-        <div className="w-full aspect-video mb-4 overflow-hidden rounded-lg bg-surface-container-highest relative">
-          <Image
-            src={project.image}
-            alt={project.imageAlt}
-            fill
-            sizes="(min-width: 1024px) 50vw, 100vw"
-            className="object-cover transform group-hover:scale-105 transition-transform duration-700"
-          />
-          <HoverActions project={project} />
+    <article
+      data-project-item
+      className="group relative flex flex-col lg:flex-row bg-surface-container-low/90 rounded-2xl overflow-hidden border border-primary/30 transition-all duration-500 hover:border-primary shadow-[0_10px_40px_rgba(155,17,30,0.15)]"
+    >
+      <div className="w-full lg:w-3/5 aspect-video lg:aspect-auto min-h-[320px] overflow-hidden relative bg-surface-container-highest">
+        <Image
+          src={project.image}
+          alt={project.imageAlt}
+          fill
+          sizes="(min-width: 1024px) 60vw, 100vw"
+          className="object-cover transform group-hover:scale-105 transition-transform duration-700 filter contrast-105"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-background/90 via-transparent to-transparent z-10 pointer-events-none" />
+        
+        {/* Featured Tag Badge */}
+        <div className="absolute top-4 left-4 z-20 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary text-on-primary font-label text-[10px] uppercase tracking-widest font-bold shadow-lg">
+          <Sparkles size={12} />
+          Destacado
         </div>
-        <h3 className="font-display text-2xl text-on-surface mb-2">{project.title}</h3>
-        <p className="text-base text-on-surface-variant line-clamp-2 mb-4">
-          {project.description}
-        </p>
-        <TagList tags={project.tags} />
+      </div>
+
+      <div className="relative z-20 p-8 lg:p-12 flex-grow flex flex-col justify-between w-full lg:w-2/5 gap-6">
+        <div>
+          <div className="flex items-center justify-between gap-4 mb-2">
+            <span className="font-label text-xs text-primary tracking-widest uppercase">
+              Web Application
+            </span>
+          </div>
+          <h3 className="font-display text-2xl lg:text-3xl text-on-surface font-bold mb-3 group-hover:text-primary transition-colors">
+            {project.title}
+          </h3>
+          <p className="text-sm lg:text-base leading-relaxed text-on-surface-variant mb-4">
+            {project.description}
+          </p>
+          <TagList tags={project.tags} />
+        </div>
+
+        <div className="pt-4 border-t border-white/5 flex items-center justify-between">
+          <ProjectActions project={project} />
+          <span className="font-label text-[10px] text-on-surface-variant/40 uppercase tracking-widest">
+            Production Ready
+          </span>
+        </div>
       </div>
     </article>
   );
 }
 
-function FeaturedProjectCard({ project }: { project: Project }) {
+function ProjectCard({ project }: { project: Project }) {
   return (
-    <article className="group relative flex flex-col md:flex-row bg-surface rounded-xl overflow-hidden border border-white/5 transition-colors duration-500 hover:border-primary shadow-lg">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_left,_var(--tw-gradient-stops))] from-primary/5 via-surface to-surface opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 pointer-events-none" />
-      <div className="w-full md:w-1/2 aspect-video md:aspect-auto overflow-hidden relative z-10 bg-surface-container-highest">
-        <Image
-          src={project.image}
-          alt={project.imageAlt}
-          fill
-          sizes="(min-width: 768px) 50vw, 100vw"
-          className="object-cover transform group-hover:scale-105 transition-transform duration-700"
-        />
-      </div>
-      <div className="relative z-10 p-12 flex-grow flex flex-col justify-center w-full md:w-1/2">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="font-display text-3xl text-on-surface">{project.title}</h3>
-          <div className="flex gap-2">
-            {project.demoUrl && (
-              <a
-                href={project.demoUrl}
-                title="Demo en vivo"
-                className="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface border border-white/10 hover:bg-primary hover:text-on-primary transition-colors hover:border-transparent"
-              >
-                <Eye size={16} aria-hidden="true" />
-                <span className="sr-only">Ver demo en vivo de {project.title}</span>
-              </a>
-            )}
-            {project.codeUrl && (
-              <a
-                href={project.codeUrl}
-                title="Código fuente"
-                className="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface border border-white/10 hover:bg-surface-bright transition-colors"
-              >
-                <Code2 size={16} aria-hidden="true" />
-                <span className="sr-only">Ver código fuente de {project.title}</span>
-              </a>
-            )}
-          </div>
+    <article
+      data-project-item
+      className="group relative flex flex-col crimson-glow-card rounded-2xl overflow-hidden h-full justify-between"
+    >
+      <div className="p-6 pb-0">
+        <div className="w-full aspect-video mb-5 overflow-hidden rounded-xl bg-surface-container-highest relative border border-white/5">
+          <Image
+            src={project.image}
+            alt={project.imageAlt}
+            fill
+            sizes="(min-width: 768px) 50vw, 100vw"
+            className="object-cover transform group-hover:scale-105 transition-transform duration-700"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent z-10 pointer-events-none" />
         </div>
-        <p className="text-lg leading-relaxed text-on-surface-variant mb-4">
+
+        <h3 className="font-display text-2xl text-on-surface mb-2 font-semibold group-hover:text-primary transition-colors">
+          {project.title}
+        </h3>
+        <p className="text-sm text-on-surface-variant line-clamp-3 mb-4 leading-relaxed">
           {project.description}
         </p>
+      </div>
+
+      <div className="p-6 pt-0 flex flex-col gap-4">
         <TagList tags={project.tags} />
+        <div className="pt-4 border-t border-white/5 flex items-center justify-between">
+          <ProjectActions project={project} />
+        </div>
       </div>
     </article>
   );
 }
 
 export default function Projects() {
-  const standard = projects.filter((p) => !p.featured);
+  const sectionRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
   const featured = projects.filter((p) => p.featured);
+  const standard = projects.filter((p) => !p.featured);
+
+  useGSAP(
+    () => {
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (prefersReducedMotion) return;
+
+      // Header Animation
+      gsap.fromTo(
+        headerRef.current,
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.9,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+
+      // Projects Fade + Slide with ScrollTrigger
+      const items = containerRef.current?.querySelectorAll("[data-project-item]");
+      if (items && items.length > 0) {
+        gsap.fromTo(
+          items,
+          { opacity: 0, y: 50, scale: 0.97 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.85,
+            stagger: 0.2,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top 75%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      }
+    },
+    { scope: sectionRef }
+  );
 
   return (
-    <section id="projects" className="py-[120px] bg-surface-container-lowest">
+    <section id="projects" ref={sectionRef} className="py-[120px] bg-surface-container-lowest relative border-b border-white/5">
       <div className="max-w-[1200px] mx-auto px-5 lg:px-6">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+        
+        {/* Header */}
+        <div ref={headerRef} className="flex flex-col md:flex-row justify-between items-start md:items-end mb-14 gap-6">
           <div>
-            <span className="font-label text-xs text-primary uppercase tracking-[0.2em] mb-4 block">
-              Portafolio
-            </span>
-            <h2 className="text-[2.5rem] lg:text-[4rem] font-bold font-display text-on-surface">
-              Proyectos Destacados
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container border border-white/10 mb-4">
+              <FolderGit2 size={14} className="text-primary" />
+              <span className="font-label text-xs text-primary uppercase tracking-[0.2em] font-semibold">
+                Portafolio Seleccionado
+              </span>
+            </div>
+            <h2 className="text-[2.5rem] lg:text-[4rem] font-bold font-display text-on-surface tracking-tight">
+              Proyectos <span className="text-gradient-crimson italic">Destacados</span>
             </h2>
           </div>
-          <a
-            href="#"
-            className="font-label text-xs text-on-surface-variant hover:text-primary transition-colors flex items-center gap-2 group"
-          >
-            Ver todos los proyectos
-            <ArrowRight
-              size={14}
-              className="transform group-hover:translate-x-1 transition-transform"
-              aria-hidden="true"
-            />
-          </a>
+
+          <p className="text-sm text-on-surface-variant/80 max-w-sm">
+            Soluciones web completas creadas con estándares de ingeniería, alto desempeño y experiencia interactiva.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {standard.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+        {/* Project Container */}
+        <div ref={containerRef} className="flex flex-col gap-10">
+          {/* Featured items first */}
+          {featured.map((project) => (
+            <FeaturedProjectCard key={project.id} project={project} />
           ))}
-        </div>
 
-        {featured.length > 0 && (
-          <div className="mt-12 flex flex-col gap-12">
-            {featured.map((project) => (
-              <FeaturedProjectCard key={project.id} project={project} />
+          {/* Standard items in grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {standard.map((project) => (
+              <ProjectCard key={project.id} project={project} />
             ))}
           </div>
-        )}
+        </div>
       </div>
     </section>
   );

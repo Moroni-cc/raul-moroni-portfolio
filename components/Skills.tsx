@@ -1,6 +1,16 @@
-import { Code2, Layers, Wrench, type LucideIcon } from "lucide-react";
+"use client";
+
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Code2, Layers, Wrench, Terminal, Cpu, type LucideIcon } from "lucide-react";
 import { skillGroups } from "@/lib/content";
 import type { SkillGroup } from "@/types";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(useGSAP, ScrollTrigger);
+}
 
 const ICONS: Record<SkillGroup["icon"], LucideIcon> = {
   code: Code2,
@@ -8,48 +18,126 @@ const ICONS: Record<SkillGroup["icon"], LucideIcon> = {
   wrench: Wrench,
 };
 
-function SkillCard({ group }: { group: SkillGroup }) {
-  const Icon = ICONS[group.icon];
+function SkillCard({ group, index }: { group: SkillGroup; index: number }) {
+  const Icon = ICONS[group.icon] || Terminal;
 
   return (
-    <div className="bg-surface-container-low p-8 rounded-xl border border-white/5 transition-all duration-300 hover:border-primary-container hover:-translate-y-2 hover:shadow-[0_10px_40px_rgba(139,13,26,0.15)] group relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-primary-container/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      <div className="relative z-10 flex flex-col h-full">
-        <div className="flex items-center gap-3 mb-4">
-          <Icon className="text-primary" size={28} strokeWidth={1.75} aria-hidden="true" />
-          <h3 className="font-display text-xl text-on-surface">{group.title}</h3>
+    <div
+      data-skill-card
+      className="crimson-glow-card p-8 rounded-2xl flex flex-col justify-between group relative overflow-hidden h-full"
+    >
+      {/* Ambient hover gradient */}
+      <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+      <div>
+        <div className="flex items-center justify-between mb-6">
+          <div className="w-12 h-12 rounded-xl bg-surface-container-high border border-white/10 flex items-center justify-center text-primary group-hover:border-primary/50 group-hover:bg-primary/10 transition-all duration-300 shadow-[0_0_15px_rgba(255,77,90,0.1)]">
+            <Icon size={24} strokeWidth={2} aria-hidden="true" />
+          </div>
+          <span className="font-label text-xs text-on-surface-variant/40 group-hover:text-primary transition-colors">
+            0{index + 1}
+          </span>
         </div>
-        <ul className="flex flex-wrap gap-2 mt-auto">
-          {group.items.map((item) => (
-            <li
-              key={item}
-              className="px-3 py-1 bg-surface rounded text-on-surface-variant font-label text-xs border border-white/5 group-hover:border-primary/30 transition-colors"
-            >
-              {item}
-            </li>
-          ))}
-        </ul>
+
+        <h3 className="font-display text-2xl text-on-surface mb-3 font-semibold group-hover:text-primary transition-colors">
+          {group.title}
+        </h3>
+
+        <p className="text-xs text-on-surface-variant/70 mb-6 font-body">
+          {index === 0 && "Bases robustas de programación web, tipado estricto y estándares modernos."}
+          {index === 1 && "Arquitecturas reactivas, renderizado optimizado y estilizado atómico."}
+          {index === 2 && "Flujos de trabajo ágiles, control de versiones e ingeniería de software."}
+        </p>
       </div>
+
+      <ul className="flex flex-wrap gap-2 pt-4 border-t border-white/5">
+        {group.items.map((item) => (
+          <li
+            key={item}
+            className="px-3 py-1.5 bg-surface-container rounded-md text-on-surface-variant font-label text-xs border border-white/5 group-hover:border-primary/20 group-hover:text-on-surface transition-all duration-300"
+          >
+            {item}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
 
 export default function Skills() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const cardsContainerRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (prefersReducedMotion) return;
+
+      // Header entrance
+      gsap.fromTo(
+        headerRef.current,
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.9,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+
+      // Cards staggered entrance with ScrollTrigger
+      const cards = cardsContainerRef.current?.querySelectorAll("[data-skill-card]");
+      if (cards && cards.length > 0) {
+        gsap.fromTo(
+          cards,
+          { opacity: 0, y: 40, scale: 0.95 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.8,
+            stagger: 0.18,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: cardsContainerRef.current,
+              start: "top 80%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      }
+    },
+    { scope: sectionRef }
+  );
+
   return (
-    <section id="skills" className="py-[120px] relative">
+    <section id="skills" ref={sectionRef} className="py-[120px] relative border-b border-white/5">
       <div className="max-w-[1200px] mx-auto px-5 lg:px-6">
-        <div className="flex flex-col items-center mb-12 text-center">
-          <span className="font-label text-xs text-primary uppercase tracking-[0.2em] mb-4">
-            Competencias Técnicas
-          </span>
-          <h2 className="text-[2.5rem] lg:text-[4rem] font-bold font-display text-on-surface">
-            Habilidades
+        <div ref={headerRef} className="flex flex-col items-center mb-16 text-center">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-surface-container border border-white/10 mb-4">
+            <Cpu size={14} className="text-primary" />
+            <span className="font-label text-xs text-primary uppercase tracking-[0.2em] font-semibold">
+              Stack & Habilidades
+            </span>
+          </div>
+
+          <h2 className="text-[2.5rem] lg:text-[4rem] font-bold font-display text-on-surface tracking-tight">
+            Tecnologías de <span className="text-gradient-crimson italic">Alto Nivel</span>
           </h2>
+          <p className="text-base text-on-surface-variant/80 max-w-xl mt-2">
+            Herramientas y tecnologías seleccionadas para ofrecer velocidad, escalabilidad y calidad de código.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {skillGroups.map((group) => (
-            <SkillCard key={group.title} group={group} />
+        <div ref={cardsContainerRef} className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {skillGroups.map((group, index) => (
+            <SkillCard key={group.title} group={group} index={index} />
           ))}
         </div>
       </div>

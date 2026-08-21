@@ -1,17 +1,19 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Hanken_Grotesk, Geist } from "next/font/google";
+import CrimsonAura from "@/components/CrimsonAura";
 import "./globals.css";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
-  weight: ["600", "700"],
+  weight: ["400", "600", "700", "900"],
+  style: ["normal", "italic"],
   variable: "--font-playfair",
   display: "swap",
 });
 
 const hankenGrotesk = Hanken_Grotesk({
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-hanken",
   display: "swap",
 });
@@ -45,7 +47,8 @@ export default function RootLayout({
       className={`${playfair.variable} ${hankenGrotesk.variable} ${geist.variable} dark`}
       suppressHydrationWarning
     >
-      <body className="bg-background font-body text-on-background antialiased">
+      <body className="bg-background font-body text-on-background antialiased selection:bg-primary-container selection:text-on-primary-container">
+        <CrimsonAura />
         <div className="light-leak top-[-10%] left-[-10%]" aria-hidden="true" />
         <div className="light-leak bottom-[-10%] right-[-10%]" aria-hidden="true" />
         {children}
